@@ -2,10 +2,10 @@
   "routes": [
     {
       "model": {
-        "name": "user",
+        "name": "users",
         "attributes": {
           "firstname": "String",
-          "lastname": "String"
+          "lastname":  "String"
         }
       },
       "actions": ["list", "show", "create", "update", "patch", "delete"]

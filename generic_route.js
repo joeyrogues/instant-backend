@@ -56,7 +56,7 @@ var handlers = {
             return reply(Boom.notFound());
           }
 
-          _.each(model.attributes, function (attribute) {
+          _.each(_.keys(model.attributes), function (attribute) {
             if (request.payload[attribute]) {
               object[attribute] = request.payload[attribute]
             }
