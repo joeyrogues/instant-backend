@@ -5,7 +5,7 @@
         "name": "user",
         "attributes": {
           "firstname": "String",
-          "Lastname": "String"
+          "lastname": "String"
         }
       },
       "actions": ["list", "show", "create", "update", "patch", "delete"]

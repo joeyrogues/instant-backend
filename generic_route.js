@@ -1,9 +1,9 @@
 var Boom = require('boom');
 
 var handlers = {
-  list: function(ObjectModel, objectName) {
+  list: function(ObjectModel, model) {
     return {
-      method: 'GET', path: '/' + objectName + 's', handler: function (request, reply) {
+      method: 'GET', path: '/' + model.name + 's', handler: function (request, reply) {
         ObjectModel.find( function (err, users) {
           if (err) {
             return reply(Boom.badImplementation());
@@ -14,9 +14,9 @@ var handlers = {
       }
     };
   },
-  show: function(ObjectModel, objectName) {
+  show: function(ObjectModel, model) {
     return {
-      method: 'GET', path: '/' + objectName + 's/{objectId}', handler: function (request, reply) {
+      method: 'GET', path: '/' + model.name + 's/{objectId}', handler: function (request, reply) {
         ObjectModel.findById(request.params.objectId, function (err, object) {
           if (err) {
             return reply(Boom.badImplementation());
@@ -27,12 +27,16 @@ var handlers = {
       }
     };
   },
-  update: function(ObjectModel, objectName) {
+  update: function(ObjectModel, model) {
     return {
-      method: 'POST', path: '/' + objectName + 's', handler: function (request, reply) {
+      method: 'POST', path: '/' + model.name + 's', handler: function (request, reply) {
         var object = new ObjectModel();
-        // object.firstname = request.payload.firstname || '';
-        // object.lastname  = request.payload.lastname  || '';
+        
+        _.each(_.keys(model.attributes), function (attribute) {
+          if (request.payload[attribute]) {
+            object[attribute] = request.payload[attribute]
+          }
+        });
 
         object.save(function (err) {
           if (err) {
@@ -44,21 +48,19 @@ var handlers = {
       }
     };
   },
-  patch: function(ObjectModel, objectName) {
+  patch: function(ObjectModel, model) {
     return {
-      method: ['POST', 'PUT', 'PATCH'], path: '/' + objectName + 's/{objectId}', handler: function (request, reply) {
+      method: ['POST', 'PUT', 'PATCH'], path: '/' + model.name + 's/{objectId}', handler: function (request, reply) {
         ObjectModel.findById(request.params.objectId, function (err, object) {
           if (err) {
             return reply(Boom.notFound());
           }
 
-          // if (request.payload.firstname) {
-            // object.firstname = request.payload.firstname;
-          // }
-
-          // if (request.payload.lastname) {
-            // object.lastname  = request.payload.lastname;  
-          // }
+          _.each(model.attributes, function (attribute) {
+            if (request.payload[attribute]) {
+              object[attribute] = request.payload[attribute]
+            }
+          });
 
           object.save(function (err) {
               if (err) {
@@ -72,9 +74,9 @@ var handlers = {
       }
     };
   },
-  delete: function(ObjectModel, objectName) {
+  delete: function(ObjectModel, model) {
     return {
-      method: ['DELETE'], path: '/' + objectName + 's/{objectId}', handler: function (request, reply) {
+      method: ['DELETE'], path: '/' + model.name + 's/{objectId}', handler: function (request, reply) {
         ObjectModel.findById(request.params.objectId, function (err, object) {
           if (err) {
             return reply(Boom.notFound());
@@ -98,7 +100,7 @@ module.exports = {
   generate: function(route, ObjectModel) {
 
     return _.chain(handlers).pick(route.actions).map(function (handler) {
-      return handler(ObjectModel, route.model.name);
+      return handler(ObjectModel, route.model);
     }).value();
   }
 };
