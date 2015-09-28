@@ -4,12 +4,12 @@ var handlers = {
   list: function(ObjectModel, model) {
     return {
       method: 'GET', path: '/' + model.name + 's', handler: function (request, reply) {
-        ObjectModel.find( function (err, users) {
+        ObjectModel.find( function (err, objects) {
           if (err) {
             return reply(Boom.badImplementation());
           }
           
-          return reply(users);
+          return reply(objects);
         });
       }
     };

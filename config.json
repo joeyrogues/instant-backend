@@ -2,7 +2,7 @@
   "routes": [
     {
       "model": {
-        "name": "users",
+        "name": "user",
         "attributes": {
           "firstname": "String",
           "lastname":  "String"
