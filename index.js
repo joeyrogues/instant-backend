@@ -7,7 +7,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/test');
 // Running Hapi
 var Hapi = require('hapi');
 var server = new Hapi.Server();
-server.connection({ port: 3000 });
+server.connection({ port: 3000, routes: { cors: true } });
 
 var config = require("./config.json");
 
