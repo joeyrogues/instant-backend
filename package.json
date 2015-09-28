@@ -1,0 +1,19 @@
+{
+  "name": "genapi",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "boom": "^2.9.0",
+    "fs": "0.0.2",
+    "hapi": "^10.1.0",
+    "mkdirp": "^0.5.1",
+    "mongoose": "^4.1.8",
+    "underscore": "^1.8.3"
+  }
+}
