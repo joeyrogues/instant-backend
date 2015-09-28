@@ -12,7 +12,7 @@ server.connection({ port: 3000 });
 var config = require("./config.json");
 
 var genericRoute = require('./generic_route');
-var genericModel = require('generic_model');
+var genericModel = require('./generic_model');
 _.each(config.routes, function (route) {
 
   server.route(
