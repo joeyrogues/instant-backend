@@ -45,6 +45,7 @@ HAPI will listen on the following urls:
   * POST   /users/:id
   * PATCH  /users/:id
   * UPDATE /users/:id
+  * DELETE /users/:id
 * For model Car
   * GET    /cars
   * GET    /cars/:id
@@ -52,3 +53,4 @@ HAPI will listen on the following urls:
   * POST   /cars/:id
   * PATCH  /cars/:id
   * UPDATE /cars/:id
+  * DELETE /cars/:id
