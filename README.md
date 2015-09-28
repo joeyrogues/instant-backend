@@ -45,18 +45,18 @@ node index.js
 
 HAPI will listen on the following urls:
 * For model Users
-  * GET    /users
-  * GET    /users/:id
-  * POST   /users
-  * POST   /users/:id
-  * PATCH  /users/:id
-  * UPDATE /users/:id
-  * DELETE /users/:id
+  * `GET    /users`
+  * `GET    /users/:id`
+  * `POST   /users`
+  * `POST   /users/:id`
+  * `PATCH  /users/:id`
+  * `UPDATE /users/:id`
+  * `DELETE /users/:id`
 * For model Car
-  * GET    /cars
-  * GET    /cars/:id
-  * POST   /cars
-  * POST   /cars/:id
-  * PATCH  /cars/:id
-  * UPDATE /cars/:id
-  * DELETE /cars/:id
+  * `GET    /cars`
+  * `GET    /cars/:id`
+  * `POST   /cars`
+  * `POST   /cars/:id`
+  * `PATCH  /cars/:id`
+  * `UPDATE /cars/:id`
+  * `DELETE /cars/:id`
