@@ -1,3 +1,9 @@
+# Requirements
+
+* node
+* npm
+* MongoDB
+
 # How to?
 
 Just fill in the routes and models you need in config.json and run node index.js
