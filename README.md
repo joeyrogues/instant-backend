@@ -28,3 +28,9 @@ Example:
   ]
 }
 ```
+
+Then run the server
+
+```bash
+node index.js
+```
