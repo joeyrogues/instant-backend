@@ -1,7 +1,7 @@
 var Boom = require('boom');
 
 var handlers = {
-  list: function(ObjectModel, model) {
+  list: function (ObjectModel, model) {
     return {
       method: 'GET', path: '/' + model.name + 's', handler: function (request, reply) {
         ObjectModel.find( function (err, objects) {
@@ -14,7 +14,7 @@ var handlers = {
       }
     };
   },
-  show: function(ObjectModel, model) {
+  show: function (ObjectModel, model) {
     return {
       method: 'GET', path: '/' + model.name + 's/{objectId}', handler: function (request, reply) {
         ObjectModel.findById(request.params.objectId, function (err, object) {
@@ -27,7 +27,7 @@ var handlers = {
       }
     };
   },
-  update: function(ObjectModel, model) {
+  create: function (ObjectModel, model) {
     return {
       method: 'POST', path: '/' + model.name + 's', handler: function (request, reply) {
         var object = new ObjectModel();
@@ -48,9 +48,37 @@ var handlers = {
       }
     };
   },
-  patch: function(ObjectModel, model) {
+  update: function (ObjectModel, model) {
     return {
-      method: ['POST', 'PUT', 'PATCH'], path: '/' + model.name + 's/{objectId}', handler: function (request, reply) {
+      method: ['POST'], path: '/' + model.name + 's/{objectId}', handler: function (request, reply) {
+        ObjectModel.findById(request.params.objectId, function (err, object) {
+          if (err) {
+            return reply(Boom.notFound());
+          }
+
+          _.each(_.keys(model.attributes), function (attribute) {
+            object[attribute] = undefined;
+
+            if (request.payload[attribute]) {
+              object[attribute] = request.payload[attribute]
+            }
+          });
+
+          object.save(function (err) {
+              if (err) {
+                return reply(Boom.badImplementation());
+              }
+
+              return reply(object);
+          });
+
+        });
+      }
+    };
+  },
+  patch: function (ObjectModel, model) {
+    return {
+      method: ['PUT', 'PATCH'], path: '/' + model.name + 's/{objectId}', handler: function (request, reply) {
         ObjectModel.findById(request.params.objectId, function (err, object) {
           if (err) {
             return reply(Boom.notFound());
@@ -74,7 +102,7 @@ var handlers = {
       }
     };
   },
-  delete: function(ObjectModel, model) {
+  delete: function (ObjectModel, model) {
     return {
       method: ['DELETE'], path: '/' + model.name + 's/{objectId}', handler: function (request, reply) {
         ObjectModel.findById(request.params.objectId, function (err, object) {
@@ -99,7 +127,7 @@ var _ = require('underscore');
 var genericModel = require('./generic_model');
 
 module.exports = {
-  generate: function(route) {
+  generate: function (route) {
     var ObjectModel = genericModel.generate(route.model);
 
     return _.chain(handlers).pick(route.actions).map(function (handler) {
