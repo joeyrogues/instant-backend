@@ -96,8 +96,11 @@ var handlers = {
 };
 
 var _ = require('underscore');
+var genericModel = require('./generic_model');
+
 module.exports = {
-  generate: function(route, ObjectModel) {
+  generate: function(route) {
+    var ObjectModel = genericModel.generate(route.model);
 
     return _.chain(handlers).pick(route.actions).map(function (handler) {
       return handler(ObjectModel, route.model);
